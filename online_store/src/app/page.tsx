@@ -5,13 +5,13 @@ import Footer from './components/footer'
 import UseCartInformation from './hooks/UseCartInformation'
 
 export default function Home() {
-  const {CartLength}=UseCartInformation()
+  const {CartLength, updateCartLength}=UseCartInformation()
 
   return (
     <div className='flex flex-col h-full'>
       <Topbar CartLength={CartLength}/>
       
-      <MainContent/>
+      <MainContent UpdateTopBarFunction={updateCartLength}/>
 
       <Footer/>
     </div>

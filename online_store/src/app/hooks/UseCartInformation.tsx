@@ -1,4 +1,5 @@
-import { update } from "firebase/database";
+'use client'
+
 import { useEffect, useState } from "react";
 
 
@@ -7,9 +8,7 @@ import { useEffect, useState } from "react";
 function UseCartInformation(){
     const [CartLength, setCartLength] = useState(0);
     
-
-
-    const updateCart=()=>{
+    const updateCartLength=()=>{
         const SessionCart = sessionStorage.getItem('Cart');
         if (SessionCart){
             const cart = JSON.parse(SessionCart);
@@ -18,10 +17,10 @@ function UseCartInformation(){
         }
     }   
     useEffect(()=>{
-        updateCart()
+        updateCartLength()
     },[])
    
-    return {CartLength, updateCart}
+    return {CartLength, updateCartLength}
 
 };
 export default UseCartInformation;

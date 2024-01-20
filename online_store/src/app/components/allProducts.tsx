@@ -4,6 +4,8 @@ import {app} from '@/app/firebase/config'
 import { useEffect, useState, useCallback } from "react"
 import ProductTemplate from "./ProductTemplate"
 import { db } from "@/app/firebase/config"
+import CartControls from "../hooks/AddRemoveCart"
+import UseCartInformation from "../hooks/UseCartInformation"
 
 interface ProductEntry{
     id: string
@@ -18,7 +20,12 @@ interface ProductType{
     Highlights: string[]
 }
 
-export default function AllProducts(){
+
+interface AllProductsProps{
+    UpdateTopBarFunction:Function
+}
+
+export default function AllProducts(props:AllProductsProps){
     const [ArrayList, setArrayList] = useState<Array<ProductEntry>>([]);
 
     const fetchData = useCallback(async ()=>{
@@ -53,22 +60,39 @@ export default function AllProducts(){
         fetchData()
     },[fetchData])
     
+
+    const {
+        AddToCart,
+        DeleteItemFromCart,
+        CheckIndividualItemInCart
+        } = CartControls()
+    
+
+
     return (
         <div className=" flex-1 flex-wrap justify-center gap-14 flex ">
             {ArrayList.map((data)=>{
                 const Product = data.data
+                const itemIsinCart =CheckIndividualItemInCart(data.id)
 
-                return <ProductTemplate 
-                key={data.id}
-                ID={data.id}
-                Name={Product.Name} 
-                Price={Product.Price} 
-                Description={Product.Description}
-                Category={Product.Category}
-                Highlights={Product.Highlights}
-                Images={Product.Images}
-                >
-                </ProductTemplate>  
+                return (
+                    <ProductTemplate 
+                        UpdateTopbarFunction={props.UpdateTopBarFunction}
+                        DeleteFromCart={DeleteItemFromCart}
+                        AddToCart={AddToCart}
+                        ItemAlreadyInCart={itemIsinCart[0] == 1 ? true : false}
+                        QuantityInCart={itemIsinCart[1]}
+                        key={data.id}
+                        ID={data.id}
+                        Name={Product.Name} 
+                        Price={Product.Price} 
+                        Description={Product.Description}
+                        Category={Product.Category}
+                        Highlights={Product.Highlights}
+                        Images={Product.Images}
+                        >
+                    </ProductTemplate>  
+                )
             })}
         </div>
     )

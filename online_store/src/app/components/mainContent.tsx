@@ -1,9 +1,14 @@
 import AllProducts from "./allProducts"
-export default function MainContent(){
+
+interface MainContentProps{
+    UpdateTopBarFunction:Function;
+}
+
+export default function MainContent(props:MainContentProps){
     return(
         <main  className="pt-36  ">
             <h1 className="text-4xl">Welcome to Online Store!</h1>
-            <AllProducts></AllProducts>
+            <AllProducts UpdateTopBarFunction={props.UpdateTopBarFunction}></AllProducts>
         </main>
     )
 }

@@ -79,7 +79,7 @@ export default function ProductPage(props:any){
         setShowMoreImagesCarousel(!ShowMoreImagesCarousel)
     }
 
-    const { CartLength, updateCart }= UseCartInformation();
+    const { CartLength, updateCartLength }= UseCartInformation();
     return (
         <div>
             
@@ -91,7 +91,7 @@ export default function ProductPage(props:any){
                 <ProductImageContainer ShowImagesOnClick={ToggleShowAllImages} images={images}></ProductImageContainer>
                 {/*The functionality for saving items to the cart is located in ItemInfoContainer*/}
                 <ItemInfoContainer 
-                    UpdateCart={updateCart}
+                    UpdateCart={updateCartLength}
                     ItemQuantity={ItemQuantity}
                     realPrice={RecordData?.Price}
                     recordID={ProductID}

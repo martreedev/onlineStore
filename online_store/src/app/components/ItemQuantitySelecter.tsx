@@ -14,7 +14,7 @@ interface ItemQuantitySelecterProps
 
 function ItemQuantitySelecter(props:ItemQuantitySelecterProps){
     
-    const DefaultButtonStyle = "bg-red-600 text-white h-11 rounded-md hover:bg-red-700"
+    const DefaultButtonStyle = "bg-red-600 text-white h-11 rounded-md hover:bg-red-700 hover:bg-red-700"
     const ItemInCartButtonStyle = "bg-white text-green-600 h-11 border-2 border-green-600 rounded-md hover:text-green-800 hover:border-green-800"
 
     return(

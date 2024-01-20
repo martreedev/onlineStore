@@ -34,7 +34,7 @@ export default function Topbar(props:TopbarProps){
     const button_class = "font-semibold  rounded-lg h-11 px-7 hover:bg-gray-100 transition-all mr-4"
 
     return (
-    <nav className='w-full flex justify-start pl-60 h-20 items-center fixed z-30 bg-white shadow-lg'>
+    <nav className='w-full flex justify-start pl-60 h-20 items-center fixed z-30 bg-white shadow-md'>
         <Link href={'/'}>
             <img src={logo.src} alt="store-logo-image" className='w-16 mr-4 cursor-pointer'></img>
         </Link>
@@ -63,17 +63,16 @@ export default function Topbar(props:TopbarProps){
          }
          
        
-
-        <button className='w-11 h-11 hover:bg-gray-100 flex justify-center items-center rounded-lg mr-4 transition-all'>
+         <Link href={"/cart"}>
+          <button className='w-11 h-11 hover:bg-gray-100 flex justify-center items-center rounded-lg mr-4 transition-all'>
             <img className='w-6 ' src={ShoppingCartImage.src} alt="shopping cart image"></img>
             
             <div className='rounded-full w-5 bg-red-600 absolute ml-8 mb-5'>
                 <p className='text-white text-sm'>{CartLength >0? CartLength : null}</p>
             </div>
-
-
-            
         </button>
+         </Link>
+       
         
     </nav>
     )
