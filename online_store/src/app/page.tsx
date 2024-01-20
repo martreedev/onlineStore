@@ -1,14 +1,15 @@
-import Image from 'next/image'
 import Topbar from './components/topbar'
+import MainContent from './components/mainContent'
+import Footer from './components/footer'
 
 export default function Home() {
   return (
-    <div>
+    <div className='flex flex-col h-full'>
       <Topbar/>
+      
+      <MainContent/>
 
-      <main></main>
-
-      <footer></footer>
+      <Footer/>
     </div>
   )
 }
