@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const UseChangeQuantity = (event:any)=>{
     const [PriceTextColor, setPriceTextColor] = useState('#000000');
-    const [ItemQuantity, setItemQuantity] = useState<number>(0);
+    const [ItemQuantity, setItemQuantity] = useState<number>(1);
     const [DisplayPrice, setDisplayPrice] = useState('');
     const [BasePrice, setBasePrice] = useState(0);
     

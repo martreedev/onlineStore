@@ -5,11 +5,14 @@ import { db } from "@/app/firebase/config";
 import Topbar from "@/app/components/topbar";
 import { FormatPrice } from "@/app/functions/FormatProductPrice";
 import Footer from "@/app/components/footer";
-import UseChangeQuantity from "@/app/functions/ChangeQuantityEventHandler";
+import UseChangeQuantity from "@/app/hooks/ChangeQuantityEventHandler";
 import AboutThisItem from "@/app/components/AboutThisItem";
 import ProductImageContainer from "@/app/components/ProductImageContainer";
 import ItemInfoContainer from "@/app/components/ItemInfoContainer";
 import ShowMoreImages from "@/app/components/ShowMoreImages";
+import ProductTemplate from "@/app/components/ProductTemplate";
+import UseCartInformation from "@/app/hooks/UseCartInformation";
+
 
 interface ProductTemplate{
     Name:string,
@@ -22,12 +25,12 @@ interface ProductTemplate{
 export default function ProductPage(props:any){
     const [RecordData, setRecordData] = useState<ProductTemplate>();
     const {PriceTextColor, ItemQuantity, setDisplayPrice, DisplayPrice,  setBasePrice, ChangeQuantityEventHadler} = UseChangeQuantity(event);
-    const [SelectedDeliveryType, setSelectedDeliveryType] = useState<number>(1);
     const [ShowMoreImagesCarousel , setShowMoreImagesCarousel ] = useState<boolean>(false);
     
 
+
+    const ProductID = props.params.productID;
     const getRecord = async()=>{
-        const ProductID = props.params.productID;
         const docRef=  doc(db, 'products', ProductID);
             const docSnap = await getDoc(docRef);
         const data = docSnap.data();
@@ -72,36 +75,32 @@ export default function ProductPage(props:any){
     const highlights = RecordData?.Highlights;
     const name = RecordData?.Name;
 
-    const SelectDeliveryMethod = ()=>{
-        console.log('hey there')
-        return true
-    }
-
     const ToggleShowAllImages = ()=>{
         setShowMoreImagesCarousel(!ShowMoreImagesCarousel)
     }
 
+    const { CartLength, updateCart }= UseCartInformation();
     return (
         <div>
             
             {ShowMoreImagesCarousel ? <ShowMoreImages Images={images} ToggleShowAllImages={ToggleShowAllImages}></ShowMoreImages> :null}
 
-
-            <Topbar></Topbar>
+            <Topbar CartLength={CartLength}></Topbar>
 
             <div className="pt-28 flex">
                 <ProductImageContainer ShowImagesOnClick={ToggleShowAllImages} images={images}></ProductImageContainer>
-
+                {/*The functionality for saving items to the cart is located in ItemInfoContainer*/}
                 <ItemInfoContainer 
+                    UpdateCart={updateCart}
+                    ItemQuantity={ItemQuantity}
+                    realPrice={RecordData?.Price}
+                    recordID={ProductID}
                     name={name} 
                     PriceTextColor={PriceTextColor} 
                     DisplayPrice={DisplayPrice}
-                    SelectedDeliveryType={SelectedDeliveryType}
-                    setSelectedDeliveryType={setSelectedDeliveryType}
                     ChangeQuantityEventHadler={ChangeQuantityEventHadler}
                 />
             </div>
-
 
             <AboutThisItem description={description} highlights={highlights}></AboutThisItem>
 

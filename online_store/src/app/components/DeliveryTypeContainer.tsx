@@ -14,6 +14,7 @@ interface DeliveryTypeContainerProps
 
 export default function DeliveryTypeContainer(props:DeliveryTypeContainerProps){
     //const [SelectedDeliveryType, setSelectedDeliveryType] = useState<number>(1);
+    
     const SelectedDeliveryType = props.SelectedDeliveryType;
     const setSelectedDeliveryType = props.setSelectedDeliveryType;
 

@@ -12,12 +12,24 @@ import { signOut } from 'firebase/auth'
 import { useRouter } from 'next/navigation'
 
 
-export default function Topbar(){
+interface CartStructure
+{
+    deliveryType:number
+    quantity:number
+    price:number
+    recordID:string
+}
+
+interface TopbarProps
+{
+    CartLength:number
+}
+
+export default function Topbar(props:TopbarProps){
     const [user] = useAuthState(auth);
-    
     const userSession = sessionStorage.getItem('user');
-    const router = useRouter();
-    
+    const CartLength = props.CartLength;
+
 
     const button_class = "font-semibold  rounded-lg h-11 px-7 hover:bg-gray-100 transition-all mr-4"
 
@@ -54,6 +66,13 @@ export default function Topbar(){
 
         <button className='w-11 h-11 hover:bg-gray-100 flex justify-center items-center rounded-lg mr-4 transition-all'>
             <img className='w-6 ' src={ShoppingCartImage.src} alt="shopping cart image"></img>
+            
+            <div className='rounded-full w-5 bg-red-600 absolute ml-8 mb-5'>
+                <p className='text-white text-sm'>{CartLength >0? CartLength : null}</p>
+            </div>
+
+
+            
         </button>
         
     </nav>
