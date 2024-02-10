@@ -11,8 +11,7 @@ import ProductImageContainer from "@/app/components/ProductImageContainer";
 import ItemInfoContainer from "@/app/components/ItemInfoContainer";
 import ShowMoreImages from "@/app/components/ShowMoreImages";
 import ProductTemplate from "@/app/components/ProductTemplate";
-import UseCartInformation from "@/app/hooks/UseCartInformation";
-
+import CartControls from "@/app/hooks/AddRemoveCart";
 
 interface ProductTemplate{
     Name:string,
@@ -46,6 +45,7 @@ export default function ProductPage(props:any){
         return record;
         }
     }
+    
     const fetchData = useCallback(async()=>{
         try{
             const result = await getRecord()
@@ -64,7 +64,7 @@ export default function ProductPage(props:any){
     },[])
 
    
-
+    const { refetchCartLength , CartLength } = CartControls()
     useEffect(()=>{
         fetchData()
     },[])
@@ -79,7 +79,8 @@ export default function ProductPage(props:any){
         setShowMoreImagesCarousel(!ShowMoreImagesCarousel)
     }
 
-    const { CartLength, updateCartLength }= UseCartInformation();
+    
+
     return (
         <div>
             
@@ -90,8 +91,9 @@ export default function ProductPage(props:any){
             <div className="pt-28 flex">
                 <ProductImageContainer ShowImagesOnClick={ToggleShowAllImages} images={images}></ProductImageContainer>
                 {/*The functionality for saving items to the cart is located in ItemInfoContainer*/}
-                <ItemInfoContainer 
-                    UpdateCart={updateCartLength}
+                <ItemInfoContainer
+                    ProductThumbnail={images? images[0]: ""} 
+                    UpdateCart={refetchCartLength}
                     ItemQuantity={ItemQuantity}
                     realPrice={RecordData?.Price}
                     recordID={ProductID}

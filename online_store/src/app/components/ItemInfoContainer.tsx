@@ -4,12 +4,12 @@ import ItemQuantitySelecter from "./ItemQuantitySelecter";
 import StripeLogo from '@/app/images/stripe_logo.png'
 import InfoImage from '@/app/images/Info.svg'
 import { useEffect, useState } from "react";
-import UseCartInformation from "../hooks/UseCartInformation";
 
 import CartControls from "../hooks/AddRemoveCart";
 
 interface ItemInfoContainerProps
 {   
+    ProductThumbnail:string;
     UpdateCart:Function;
     ItemQuantity:number;
     recordID: string;
@@ -18,14 +18,6 @@ interface ItemInfoContainerProps
     PriceTextColor: string;
     DisplayPrice:String;
     ChangeQuantityEventHadler:Function;
-}
-
-interface CartStructure
-{
-    deliveryType:number
-    quantity:number
-    price:number
-    recordID:string
 }
 
 function ItemInfoContainer(props:ItemInfoContainerProps){
@@ -50,7 +42,9 @@ function ItemInfoContainer(props:ItemInfoContainerProps){
     },[])
 
     const AddToCartOnClick = ()=>{
-        AddToCart(props.recordID, props.ItemQuantity, SelectedDeliveryType, props.realPrice);
+        if (props.name){
+            AddToCart(props.ProductThumbnail, props.recordID, props.ItemQuantity, SelectedDeliveryType, props.realPrice, props.name);
+        }
         props.UpdateCart()
     }
     const DeleteFromCartOnClick = ()=>{

@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 
 interface CartStructure
 {
+    image:string
     deliveryType:number
     quantity:number
     price:number
     recordID:string
+    name:string
 }
 
 
@@ -13,17 +15,118 @@ interface CartStructure
 function CartControls(){
 
     const [Cart, setCart] = useState<CartStructure[]>([]);
+    const [CartLength, setCartLength] = useState<number>(0);
+    const [SubTotal, setSubTotal] = useState(0);
+    
+
     const [ItemAlreadyInCart, setItemAlreadyInCart] = useState(false);
     const [QuantityInCart, setQuantityInCart] = useState(0);
 
     useEffect(()=>{
-        const PulledCart = sessionStorage.getItem("Cart")
-        if (PulledCart){
-            const cart:CartStructure[] = JSON.parse(PulledCart)
-            setCart(cart) 
-        }
+        refetchCartFromStorage()
+        refetchCartLength()
+        refetchCartSubtotal()
     },[])
 
+    const refetchCartFromStorage = ()=>{
+        const LocalStorageCart = sessionStorage.getItem("Cart")
+        if (LocalStorageCart){
+            const parsedCart:CartStructure[] = JSON.parse(LocalStorageCart)
+            setCart(parsedCart)
+            return parsedCart
+        }else{
+            const empty:CartStructure[] = [] 
+            return empty;
+        }
+    }
+
+    const refetchCartSubtotal = ()=>{
+        const LocalStorageCart = sessionStorage.getItem("Cart");
+        if (LocalStorageCart){
+            const parsedCart:CartStructure[] = JSON.parse(LocalStorageCart)
+            let subtotal = 0
+
+            for (let i=0; i<LocalStorageCart.length; i++){
+                if (parsedCart[i]){
+                    const price:number = parsedCart[i].price * parsedCart[i].quantity
+                    subtotal += price
+                }
+                
+            }
+            setSubTotal(subtotal)
+        }else{
+            return 0
+        }
+    }
+
+    const refetchCartLength = ()=>{
+        const LocalStorageCart = sessionStorage.getItem("Cart");
+        if (LocalStorageCart){
+            const parsedCart:CartStructure[] = JSON.parse(LocalStorageCart)
+            let length:number = 0;
+            for (let i=0; i<LocalStorageCart.length; i++){
+                if (parsedCart[i]){
+                    const quant:number = parsedCart[i].quantity
+                    length = length + quant
+                }
+                
+            }
+            setCartLength(length)
+        }else{
+            return 0
+        }
+        refetchCartSubtotal()
+    }
+
+    const getItemCountInCart = ()=>{
+        const LocalStorageCart = sessionStorage.getItem("Cart");
+        if (LocalStorageCart){
+            const parsedCart:CartStructure[] = JSON.parse(LocalStorageCart)
+            let itemCount =  0;
+            for (let i=0; i< parsedCart.length; i++){
+                const item = parsedCart[i]
+                if (item.quantity > 0){
+                    console.log(itemCount)
+                    itemCount ++;
+                }
+            }
+            return itemCount
+
+        }else{
+            return "empty cart"
+        }
+    }
+
+    const UpdateItemQuantityWithRecordID = (recordID:string, newQuantity:number)=>{
+        //
+        //const array = [2, 5, 9];
+        let array:CartStructure[] = Cart;
+        let Record= null;
+
+        let index:number = -1;
+        //find the index of the record that contains the recordID
+
+        for (let i =0; i<array.length; i++){
+            const record = array[i];
+            if (record.recordID == recordID){
+                Record = record
+                index = i
+            }
+        }
+
+        if (index > -1) { // only splice array when item is found
+            array.splice(index, 1); // 2nd parameter means remove one item only
+        }else{
+            console.log(`Record: ${recordID} does not exist in cart`)
+            return
+        }
+        //item is removed from array
+        if (Record){//change the item quantity
+            Record.quantity = newQuantity
+            array.push(Record)// add updated record to cart array
+            setCart(array)// update cart state with new array
+        }
+    }
 
     const UpdateCartData = ()=>{
         const cart = JSON.stringify(Cart)
@@ -40,7 +143,7 @@ function CartControls(){
 
     const CheckIfItemInCart = (recordID:string)=>{
         const CartSession = sessionStorage.getItem("Cart")
-        if (CartSession !== null){
+        if (CartSession){
             const newCart:CartStructure[] = JSON.parse(CartSession)
             for (let i=0; i< newCart.length; i++){
                 const item = newCart[i];
@@ -54,7 +157,7 @@ function CartControls(){
     
     const CheckIndividualItemInCart = (recordID:string)=>{
         const CartSession = sessionStorage.getItem("Cart")
-        if (CartSession !== null){
+        if (CartSession){
             const newCart:CartStructure[] = JSON.parse(CartSession)
             for (let i=0; i< newCart.length; i++){
                 const item = newCart[i];
@@ -68,10 +171,12 @@ function CartControls(){
     }
 
 
-    const AddToCart = (recordID:string, ItemQuantity:number, SelectedDeliveryType:number, realPrice:number|undefined)=>{
+    const AddToCart = (imageSrc:string, recordID:string, ItemQuantity:number, SelectedDeliveryType:number, realPrice:number|undefined, name:string)=>{
         if (realPrice){
             const Item:CartStructure = 
             {
+                name:name,
+                image:imageSrc,
                 deliveryType:SelectedDeliveryType,
                 quantity:ItemQuantity,
                 price:realPrice,
@@ -118,7 +223,14 @@ function CartControls(){
         CheckIfItemInCart,
         RefetchCart,
         UpdateCartData,
-        CheckIndividualItemInCart
+        CheckIndividualItemInCart,
+        refetchCartFromStorage,
+        getItemCountInCart,
+        refetchCartLength,
+        CartLength,
+        refetchCartSubtotal,
+        SubTotal,
+        UpdateItemQuantityWithRecordID
         }
 
 };

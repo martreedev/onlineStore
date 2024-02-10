@@ -5,7 +5,6 @@ import { useEffect, useState, useCallback } from "react"
 import ProductTemplate from "./ProductTemplate"
 import { db } from "@/app/firebase/config"
 import CartControls from "../hooks/AddRemoveCart"
-import UseCartInformation from "../hooks/UseCartInformation"
 
 interface ProductEntry{
     id: string

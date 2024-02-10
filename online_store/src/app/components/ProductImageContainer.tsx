@@ -10,7 +10,7 @@ function ProductImageContainer(props:ProductImageContainerProps){
     const images = props.images;
     const ToggleShowImages = props.ShowImagesOnClick
     return(
-        <div className="   w-2/4">
+        <div className="w-2/4">
             <div className='flex flex-col items-end'>
                 <img style={{width: "41.25rem"}} className="shadow-lg rounded-xl" src={images ? images[0]:PictureLoadingImage.src} alt="product image 1"></img>
                 <div className='flex flex-col items-center'>

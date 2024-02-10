@@ -10,14 +10,14 @@ const UseChangeQuantity = (event:any)=>{
     
     const ChangeQuantityEventHadler = (event:any)=>{
         
-        console.log(event.target.value)
-        if (event.target.value != 1){
+        const Quantity:number = Number(event.target.value)
+        if (Quantity != 1){
             setPriceTextColor('#B91C1C')//red
         }else{
             setPriceTextColor('#000000')//black
         }
-        setDisplayPrice(FormatPrice((BasePrice * event.target.value)))
-        setItemQuantity(event.target.value);
+        setDisplayPrice(FormatPrice((BasePrice * Quantity)))
+        setItemQuantity(Quantity);
     }
 
     return {PriceTextColor, ItemQuantity, setDisplayPrice, DisplayPrice,  setBasePrice, ChangeQuantityEventHadler}

@@ -1,9 +1,8 @@
 import { FormatPrice } from "../functions/FormatProductPrice"
-import { formatName } from "../functions/FormatProductName"
+import { formatName } from "../functions/FormatProductName";
 import { useRouter } from 'next/navigation'
 import CartControls from "../hooks/AddRemoveCart"
-import { useEffect, useState } from "react";
-import UseCartInformation from "../hooks/UseCartInformation";
+import { useState } from "react";
 
 interface ExpectedProps{
     UpdateTopbarFunction:Function
@@ -31,24 +30,20 @@ export default function ProductTemplate(props:ExpectedProps){
         router.push(`/products/${ID}`)
     }
     
-    const {CartLength, updateCartLength} = UseCartInformation()
-    
-    /*
-    useEffect(()=>{
-        CheckIfItemInCart();
-    },[])
-    */
+    //const {CartLength, updateCartLength} = UseCartInformation()
 
     const DefaultButtonStyle ="bg-red-600 text-white rounded-lg w-52 h-10"
     const ItemInCartButtonStyle ="bg-white text-green-600 border-2 border-green-600 hover:text-green-800 hover:border-green-800 rounded-lg w-52 h-10"
 
+    const {CartLength, refetchCartLength} = CartControls()
+
     const AddToCartOnClick = ()=>{
-        props.AddToCart(props.ID, 1, 1, props.Price)
-        updateCartLength();
+        props.AddToCart(FirstImage, props.ID, 1, 1, props.Price, props.Name)
+        refetchCartLength();
     }
     const DeleteItemOnClick = ()=>{
         props.DeleteFromCart(props.ID)
-        updateCartLength()
+        refetchCartLength()
     }
 
     const [IsItemInCart, setIsItemInCart] = useState<boolean>(props.ItemAlreadyInCart);
