@@ -32,8 +32,8 @@ export default function ProductTemplate(props:ExpectedProps){
     
     //const {CartLength, updateCartLength} = UseCartInformation()
 
-    const DefaultButtonStyle ="bg-red-600 text-white rounded-lg w-52 h-10"
-    const ItemInCartButtonStyle ="bg-white text-green-600 border-2 border-green-600 hover:text-green-800 hover:border-green-800 rounded-lg w-52 h-10"
+    const DefaultButtonStyle ="bg-red-600 text-white rounded-lg w-72 h-12"
+    const ItemInCartButtonStyle ="bg-white text-green-600 border-2 border-green-600 hover:text-green-800 hover:border-green-800 rounded-lg w-72 h-12"
 
     const {CartLength, refetchCartLength} = CartControls()
 
@@ -51,14 +51,14 @@ export default function ProductTemplate(props:ExpectedProps){
     
     return (
        
-        <div style={{height:"22rem"}} className="w-56 text-center  bg-gray-50 shadow-2xl mb-3 rounded-lg flex  items-center flex-col">
+        <div style={{height:"32rem"}} className="border border-red-600       w-2/12 text-center  bg-gray-50 shadow-2xl mb-6 rounded-lg flex items-center flex-col">
             
             
             <div onClick={redirectToProductPage} className=" h-5/6">
                 <button className="flex items-center flex-col">
-                    <img className="w-44 rounded-lg mt-3" src={FirstImage} alt="Product cover image"></img>
+                    <img className="w-72 rounded-lg mt-3" src={FirstImage} alt="Product cover image"></img>
                     <h1 className="font-bold text-xl pt-5 ">{price}</h1>
-                    <h1 className="hover:underline">{ProductName}</h1>
+                    <h1 className="pl-2 font-semibold text-lg hover:underline hover:text-black text-gray-500">{ProductName}</h1>
                 </button>
             </div>
 

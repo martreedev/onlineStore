@@ -10,8 +10,6 @@ interface CartStructure
     name:string
 }
 
-
-
 function CartControls(){
 
     const [Cart, setCart] = useState<CartStructure[]>([]);

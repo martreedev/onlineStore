@@ -6,8 +6,8 @@ interface MainContentProps{
 
 export default function MainContent(props:MainContentProps){
     return(
-        <main  className="pt-36  ">
-            <h1 className="text-4xl">Welcome to Online Store!</h1>
+        <main  className="pt-32 flex flex-1 flex-col items-center">
+            <h1 className="text-4xl pb-10 ">Welcome to Online Store!</h1>
             <AllProducts UpdateTopBarFunction={props.UpdateTopBarFunction}></AllProducts>
         </main>
     )

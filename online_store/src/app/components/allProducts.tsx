@@ -69,7 +69,7 @@ export default function AllProducts(props:AllProductsProps){
 
 
     return (
-        <div className=" flex-1 flex-wrap justify-center gap-14 flex ">
+        <div className=" flex-1 flex-wrap gap-6 flex justify-center">
             {ArrayList.map((data)=>{
                 const Product = data.data
                 const itemIsinCart =CheckIndividualItemInCart(data.id)
@@ -89,8 +89,7 @@ export default function AllProducts(props:AllProductsProps){
                         Category={Product.Category}
                         Highlights={Product.Highlights}
                         Images={Product.Images}
-                        >
-                    </ProductTemplate>  
+                    />
                 )
             })}
         </div>
