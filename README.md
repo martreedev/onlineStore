@@ -1,5 +1,5 @@
 # Online Store
-Welcome to the Online Store project! This is a fully functional e-commerce web application built using Next.js, styled with Tailwind CSS, written in TypeScript, and powered by Firebase for the backend.
+Welcome to the Online Store project! This is a template e-commerce web application built using Next.js, styled with Tailwind CSS, written in TypeScript, and powered by Firebase for the backend.
 
 ### Features
 * Product Listings: Display products with details and images.
